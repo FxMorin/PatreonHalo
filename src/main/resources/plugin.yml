@@ -1,0 +1,11 @@
+name: PatreonHalo
+version: '${project.version}'
+description: A plugin to give patreons a halo
+author: FX - PR0CESS
+main: ca.fxco.patreonhalo.PatreonHalo
+api-version: 1.18
+commands:
+  patreonhalo:
+    description: Configure patreon halo options
+    usage: /patreonhalo
+    permission: PatreonHalo.command

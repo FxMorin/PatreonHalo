@@ -1,0 +1,43 @@
+#Created with love for the Cyberdog Nation
+update_th_tick: 2
+Tiers:
+  Diamond:
+    halo_y_offset: 0.5
+    halo_radius: 0.3
+    particle_size: 0.65
+    particle_count: 30
+    color:
+      ==: Color
+      RED: 0
+      BLUE: 255
+      GREEN: 229
+  Emerald:
+    halo_y_offset: 0.5
+    halo_radius: 0.3
+    particle_size: 0.65
+    particle_count: 25
+    color:
+      ==: Color
+      RED: 0
+      BLUE: 0
+      GREEN: 255
+  Gold:
+    halo_y_offset: 0.5
+    halo_radius: 0.3
+    particle_size: 0.65
+    particle_count: 20
+    color:
+      ==: Color
+      RED: 255
+      BLUE: 0
+      GREEN: 255
+  Iron:
+    halo_y_offset: 0.5
+    halo_radius: 0.3
+    particle_size: 0.6
+    particle_count: 20
+    color:
+      ==: Color
+      RED: 240
+      BLUE: 240
+      GREEN: 240
