@@ -96,22 +96,79 @@ public final class PatreonHalo extends JavaPlugin implements CommandExecutor {
                             try {
                                 int updateThTicks = Integer.parseInt(args[1]);
                                 if (updateThTicks <= 0 || updateThTicks > 60) {
-                                    sender.sendMessage(PREFIX+"Delay must be between 0-60");
+                                    sender.sendMessage(PREFIX + "Delay must be between 0-60");
                                 } else {
-                                    config.set("update_th_tick",updateThTicks);
+                                    config.set("update_th_tick", updateThTicks);
                                     runnable.cancel();
                                     task.cancel();
                                     runnable = null;
                                     task = null;
                                     createTask();
-                                    sender.sendMessage(PREFIX+"Changed update_th_tick to: "+updateThTicks);
+                                    sender.sendMessage(PREFIX + "Changed update_th_tick to: " + updateThTicks);
                                     return true;
+                                }
+                            } catch (NumberFormatException err) {
+                                sender.sendMessage(PREFIX + "Please ender a valid number");
+                            }
+                        } else {
+                            sender.sendMessage(PREFIX + "Command Usage: /patreonhalo update_th_tick <delayInTicks>");
+                        }
+                        return false;
+                    } else if (Objects.equals(args[0], "all")) {
+                        if (args.length == 3) {
+                            boolean success = true;
+                            boolean setDefault = Objects.equals(args[2], "default");
+                            try {
+                                switch (args[1]) {
+                                    case "halo_y_offset":
+                                        for (Tier tier : tiers) {
+                                            tier.yOffset = setDefault ? 0.5D : Double.parseDouble(args[2]);
+                                            config.set("Tiers."+tier.name+".halo_y_offset",tier.yOffset);
+                                        }
+                                        break;
+                                    case "halo_radius":
+                                        for (Tier tier : tiers) {
+                                            tier.radius = setDefault ? 0.3F : Float.parseFloat(args[2]);
+                                            config.set("Tiers." + tier.name + ".halo_radius", tier.radius);
+                                        }
+                                        break;
+                                    case "particle_size":
+                                        for (Tier tier : tiers) {
+                                            float size = setDefault ? 0.7F : Float.parseFloat(args[2]);
+                                            tier.setData(tier.data.getColor(), size);
+                                            config.set("Tiers." + tier.name + ".particle_size", size);
+                                        }
+                                        break;
+                                    case "particle_count":
+                                        for (Tier tier : tiers) {
+                                            tier.particleCount = setDefault ? 20 : Integer.parseInt(args[2]);
+                                            config.set("Tiers." + tier.name + ".particle_count", tier.particleCount);
+                                        }
+                                        break;
+                                    case "color":
+                                        for (Tier tier : tiers) {
+                                            Color col = setDefault ?
+                                                    Color.YELLOW :
+                                                    Color.fromRGB(Integer.parseInt(args[2]));
+                                            tier.setData(col, tier.data.getSize());
+                                            config.set("Tiers." + tier.name + ".color", col);
+                                        }
+                                        break;
+                                    default:
+                                        success = false;
+                                        break;
                                 }
                             } catch(NumberFormatException err) {
                                 sender.sendMessage(PREFIX+"Please ender a valid number");
+                                success = false;
                             }
-                        } else {
-                            sender.sendMessage(PREFIX+"Command Usage: /patreonhalo update_th_tick <delayInTicks>");
+                            if (success) {
+                                sender.sendMessage(
+                                        PREFIX+"Changed all "+args[1]+" values to: "+args[2]
+                                );
+                                saveConfig();
+                                return true;
+                            }
                         }
                         return false;
                     } else {
@@ -184,12 +241,13 @@ public final class PatreonHalo extends JavaPlugin implements CommandExecutor {
         if (args.length == 1) {
             matches.add("update_th_tick");
             matches.addAll(tierNames);
+            matches.add("all");
         } else if (args.length == 2) {
             if (Objects.equals(args[0], "update_th_tick")) {
                 matches.add("1");
                 matches.add("2");
                 matches.add("4");
-            } else if (tierNames.contains(args[0])) {
+            } else if (tierNames.contains(args[0]) || args[0].equals("all")) {
                 matches.add("halo_y_offset");
                 matches.add("halo_radius");
                 matches.add("particle_size");
