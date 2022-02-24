@@ -3,9 +3,9 @@
 ### A simple paper plugin that allows you to give halo's to patreon's *(or really anyone)*
 
 ## Permissions
-The plugin should work with most permission plugins
-`patreonhalo.<yourTierName>` - Everyone with this permission will get the associated halo above there head
-`patreonhalo.command` - Players with this permission will be able to use the `/patreonhalo` command
+The plugin should work with most permission plugins  
+`patreonhalo.<yourTierName>` - Everyone with this permission will get the associated halo above there head  
+`patreonhalo.command` - Players with this permission will be able to use the `/patreonhalo` command  
 
 ## Configure
 The plugin adds decent configurability for multiple tiers 
